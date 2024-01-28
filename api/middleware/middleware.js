@@ -25,13 +25,19 @@ async function validateUserId(req, res, next) {
       message: 'problem finding user',
     })
   }
-  next()
 }
 
 function validateUser(req, res, next) {
   // DO YOUR MAGIC
-  console.log('validateUser middleware')
-  next()
+  const { name } = req.body
+  if (!name || !name.trim) {
+    res.status(400).json({
+      message: "missing required text field"
+    })
+  } else {
+    req.name = name.trim()
+    next()
+  }
 }
 
 function validatePost(req, res, next) {
